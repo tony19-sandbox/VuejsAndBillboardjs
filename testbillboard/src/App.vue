@@ -1,29 +1,27 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-    <div id="chart">
-  </div>
+    <div ref="chart"></div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { bb } from 'billboard.js';
+import bb, { line, areaSpline } from 'billboard.js';
 
 @Component
 export default class App extends Vue {
-  mounted() {
-    console.log(this);
-    console.log(bb);
+  async mounted() {
+    await this.$nextTick();
     bb.generate({
-      bindto: '#chart',
+      bindto: this.$refs.chart,
       data: {
         columns: [
           ['data1', 30, 200, 100, 170, 150, 250],
         ],
         types: {
-          data1: 'line',
-          data2: 'area-spline',
+          data1: line(),
+          data2: areaSpline(),
         },
         colors: {
           data1: 'red',
